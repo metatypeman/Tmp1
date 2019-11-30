@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace TmpSandBoxApp.Calendars.Common
 {
@@ -10,6 +11,8 @@ namespace TmpSandBoxApp.Calendars.Common
         private readonly Logger mLogger = LogManager.GetCurrentClassLogger();
         private readonly object mLock = new object();
         private ulong mCurrentTicks;
+        private Thread mThread;
+        private bool mRun;
 
         public ulong GetTicks()
         {
@@ -21,12 +24,47 @@ namespace TmpSandBoxApp.Calendars.Common
 
         public void Start()
         {
-            throw new NotImplementedException();
+            lock(mLock)
+            {
+                if(mRun)
+                {
+                    return;
+                }
+
+                mRun = true;
+                mThread = new Thread(UpdateTicks);
+                mThread.IsBackground = true;
+                mThread.Start();
+            }
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            lock(mLock)
+            {
+                if(!mRun)
+                {
+                    return;
+                }
+                mRun = false;
+                mThread = null;
+            }
+        }
+
+        private void UpdateTicks()
+        {
+            while(true)
+            {
+                lock(mLock)
+                {
+                    if(!mRun)
+                    {
+                        return;
+                    }
+                    mCurrentTicks++;
+                }
+                Thread.Sleep(1000);
+            }
         }
     }
 }
