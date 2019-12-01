@@ -10,11 +10,11 @@ namespace TmpSandBoxApp.Calendars.Common
     {
         private readonly Logger mLogger = LogManager.GetCurrentClassLogger();
         private readonly object mLock = new object();
-        private ulong mCurrentTicks;
+        private long mCurrentTicks;
         private Thread mThread;
         private bool mRun;
 
-        public ulong GetTicks()
+        public long GetTicks()
         {
             lock(mLock)
             {

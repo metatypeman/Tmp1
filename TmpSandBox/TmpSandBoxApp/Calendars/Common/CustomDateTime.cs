@@ -4,9 +4,13 @@ using System.Text;
 
 namespace TmpSandBoxApp.Calendars.Common
 {
-    public interface ITimeTicker: IReadOnlyTimeTicker
+    public class CustomDateTime
     {
-        void Start();
-        void Stop();
+
+
+        public CustomDateTime(long ticks)
+        {
+            
+        }
     }
 }

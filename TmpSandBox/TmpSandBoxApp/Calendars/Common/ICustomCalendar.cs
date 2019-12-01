@@ -4,9 +4,7 @@ using System.Text;
 
 namespace TmpSandBoxApp.Calendars.Common
 {
-    public interface ITimeTicker: IReadOnlyTimeTicker
+    public interface ICustomCalendar
     {
-        void Start();
-        void Stop();
     }
 }
