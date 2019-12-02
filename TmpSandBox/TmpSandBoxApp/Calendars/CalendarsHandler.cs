@@ -31,15 +31,64 @@ namespace TmpSandBoxApp.Calendars
 
             //timeTicker.Stop();
 
-            var currTicks = 1095292800L;
+            var tmpDt = new DateTime(2000, 2, 29, 0, 0, 0, DateTimeKind.Utc);
+
+            mLogger.Info($"tmpDt = {tmpDt}");
+
+            var currTicks = tmpDt.Ticks;
+            //var currTicks = 1095292800L;
 
             mLogger.Info($"currTicks = {currTicks}");
 
+            var unixTicks = currTicks / 10000000;
+
             var secsInDay = 86400;
 
-            var days = currTicks / secsInDay;
+            var totalDays = unixTicks / secsInDay;
 
-            mLogger.Info($"days = {days}");
+            mLogger.Info($"totalDays = {totalDays}");
+
+            var secsInMonth = 2629743;
+
+            var totalMonths = unixTicks / secsInMonth;
+
+            mLogger.Info($"totalMonths = {totalMonths}");
+
+            var secsInYear = 31556926;
+
+            var totalYears = unixTicks / secsInYear;
+
+            mLogger.Info($"totalYears = {totalYears}");
+
+            var realYears = totalYears + 1;
+
+            mLogger.Info($"realYears = {realYears}");
+
+            var lastSeconds = unixTicks - (totalYears * secsInYear);
+
+            mLogger.Info($"lastSeconds = {lastSeconds}");
+
+            var lastMonths = lastSeconds / secsInMonth;
+
+            mLogger.Info($"lastMonths = {lastMonths}");
+
+            var lastSecondsAfterMonths = lastSeconds - (lastMonths * secsInMonth);
+
+            mLogger.Info($"lastSecondsAfterMonths = {lastSecondsAfterMonths}");
+
+            var lastDays = lastSecondsAfterMonths / secsInDay;
+
+            mLogger.Info($"lastDays = {lastDays}");
+
+            var lastSecondsAfterDays = lastSecondsAfterMonths - (lastDays * secsInDay);
+
+            mLogger.Info($"lastSecondsAfterDays = {lastSecondsAfterDays}");
+
+            var secsInHours = 3600;
+
+            var lastTotalHours = lastSecondsAfterDays / secsInHours;
+
+            mLogger.Info($"lastTotalHours = {lastTotalHours}");
 
             mLogger.Info("End");
         }
